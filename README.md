@@ -39,16 +39,16 @@ bot.send_dm(message)
 bot.like_picture()
 ```
 
-It is also possible to get data from the prrofile:
+It is also possible to get data from the profile:
 
 ```py
-followers = bot.get_followers()  # gets up to 50 followers
+followers = bot.get_followers()  # get up to 50 followers
 for follower in followers:
     print(follower)
 ```
 
 
-Future functionality:
+## Future functionality:
 - [ ] Get follower and following counter-
 - [ ] Get post counter-
 - [ ] Like different images than just the first image-
