@@ -1,5 +1,5 @@
 # InstaBot
-InstaBot is a Python library that provides a class for automating some simple tasks on Instagram like following and sending dms on Instagram.
+InstaBot is a Python library that provides some automation for simple tasks on Instagram like following and sending dms on Instagram.
 
 ## Installation
 
