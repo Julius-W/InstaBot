@@ -5,7 +5,9 @@ InstaBot is a Python library that provides some automation for simple tasks on I
 
 You can install the library from the [GitHub repository](https://github.com/Julius-W/InstaBot) using the following command:
 
+```
 pip install git+https://github.com/Julius-W/InstaBot.git
+```
 
 ## Usage
 
