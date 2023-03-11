@@ -51,9 +51,9 @@ for follower in followers:
 
 
 ## Future functionality:
-- [ ] Get follower and following counter-
-- [ ] Get post counter-
-- [ ] Like different images than just the first image-
+- [x] Get follower and following counter
+- [x] Get post counter
+- [ ] Like different images than just the first image
 - [ ] Allow commenting on posts
 - [ ] Download images
 - [x] Send direct messages to user
