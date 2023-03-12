@@ -10,6 +10,7 @@ pip install InstaWebBot
 
 ## Usage
 **_IMPORTANT:_** The driver file for Selenium must be located in the current working directory of your project. You can download the driver [here](https://www.selenium.dev/documentation/webdriver/getting_started/install_drivers/). Please provide the driver name if you are not using the recommended geckodriver.
+
 Initialize the bot by passing in your Instagram username and password as parameters:
 
 ```py
