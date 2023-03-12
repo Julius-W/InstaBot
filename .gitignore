@@ -39,6 +39,7 @@ pip-delete-this-directory.txt
 
 # testing
 test*
+notes.md
 
 # Unit test / coverage reports
 htmlcov/
@@ -130,3 +131,4 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+/notes.md
