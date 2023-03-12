@@ -15,14 +15,14 @@ def waiting_time() -> float:
 
 
 def warning(message: str) -> None:
-    err = "\033[93m"
-    end_err = "\033[0m"
+    err: str = "\033[93m"
+    end_err: str = "\033[0m"
     print(f"{err}Warning: {message}{end_err}")
 
 
-def __write(input_field, message: str) -> None:
+def write(input_field, message: str) -> None:
     """Simulates user text input."""
-    typing_time = 0.1
+    typing_time: float = 0.1
     for word in message:
         if len(word) > 2:
             input_field.send_keys(word[:1])
@@ -41,23 +41,21 @@ class InstaBot:
 
     def __init__(self, username: str, password: str, **kwargs) -> None:
         """Initializes an instance of an InstaBot."""
-        headless: bool = kwargs.get("headless", False)
+        self.__headless: bool = kwargs.get("headless", False)
         selenium_driver: str = kwargs.get("driver", "geckodriver")
-        self.__allow_ouput: bool = kwargs.get("output", False)
+        self.__allow_output: bool = kwargs.get("output", False)
         self.success(f"Using {selenium_driver} as driver for selenium.")
         if not self.__headless:
             self.success(f"Running in normal mode (headless: {self.__headless}")
         self.path: str = os.path.abspath(__file__)
-        self.__session_data = dict()
-        self.__decimal = locale.localeconv()["decimal_point"]
-        self.__headless = headless
+        self.__session_data: dict = dict()
+        self.__decimal: str = locale.localeconv()["decimal_point"]
         self.__driver_name: str = os.path.join(os.getcwd(), selenium_driver)
         self.driver: Optional[webdriver] = None
         self.__initialize_driver()
         self.base_url: str = "https://www.instagram.com/"
         self.username: str = username
         self.__password: str = password
-
 
     def __initialize_driver(self) -> None:
         """Initializes a driver instance for selenium."""
@@ -70,14 +68,13 @@ class InstaBot:
             warning("Using the headless option makes it easier to be detected by Instagram.")
             options.add_argument("--headless")
         self.driver = webdriver.Firefox(service=service, options=options)
-    
-    def success(self, message: str) -> None:
-        if not self.__allow_ouput:
-            return
-        succ = "\033[92m"
-        end_err = "\033[0m"
-        print(f"{succ}Info: {message}{end_err}")
 
+    def success(self, message: str) -> None:
+        if not self.__allow_output:
+            return
+        succ: str = "\033[92m"
+        end_err: str = "\033[0m"
+        print(f"{succ}Info: {message}{end_err}")
 
     def login(self) -> None:
         """Logs the bot into Instagram."""
@@ -87,15 +84,15 @@ class InstaBot:
         try:
             self.driver.find_element(By.CLASS_NAME, "_a9--._a9_1").click()
         except Exception as e:
-            warning(e)
+            warning(e.__str__())
 
         # login attempt
         time.sleep(waiting_time())
-        username = self.driver.find_element(By.NAME, "username")
-        username.send_keys(self.username)
+        username_input = self.driver.find_element(By.NAME, "username")
+        username_input.send_keys(self.username)
         time.sleep(waiting_time())
-        password = self.driver.find_element(By.NAME, "password")
-        password.send_keys(self.__password)
+        password_input = self.driver.find_element(By.NAME, "password")
+        password_input.send_keys(self.__password)
         time.sleep(waiting_time())
 
         # click button
@@ -108,16 +105,15 @@ class InstaBot:
             self.driver.find_element(By.CLASS_NAME, "_acan._acao._acas._aj1-").click()
             time.sleep(waiting_time())
         except Exception as e:
-            warning(e)
+            warning(e.__str__())
         try:
             self.driver.find_element(By.CLASS_NAME, "_a9--._a9_1").click()
             time.sleep(waiting_time())
             # last index is 0 or one - depending on the output btn
         except Exception as e:
-            warning(e)
-        
+            warning(e.__str__())
 
-    def __on_profile(self):
+    def __on_profile(self) -> None:
         """Checks if the driver is currently on a profile."""
         if not re.match(f"{self.base_url}.+/", self.driver.current_url):
             raise Exception("You are currently not on the correct page.")
@@ -131,11 +127,11 @@ class InstaBot:
         # start searching account
         time.sleep(waiting_time())
         search_input = self.driver.find_element(By.CLASS_NAME, "_aauy")
-        __write(search_input, query)
+        write(search_input, query)
         time.sleep(waiting_time())
 
         # get first element in search results
-        class_string2 = "x9f619.x78zum5.xdt5ytf.x6ikm8r.x1odjw0f.x4uap5.x18d9i69.xkhd6sd.x5yr21d.xocp1fn.xh8yej3"
+        class_string2: str = "x9f619.x78zum5.xdt5ytf.x6ikm8r.x1odjw0f.x4uap5.x18d9i69.xkhd6sd.x5yr21d.xocp1fn.xh8yej3"
         search_results = self.driver.find_element(By.CLASS_NAME, class_string2)
         children = search_results.find_elements(By.TAG_NAME, "div")
         time.sleep(waiting_time())
@@ -144,13 +140,13 @@ class InstaBot:
         self.success("Found profile")
         time.sleep(waiting_time())
         try:
-            self.__session_data[self.get_current_username()]["follower"] = self.get_follower_count()
-            self.__session_data[self.get_current_username()]["following"] = self.get_following_count()
-            self.__session_data[self.get_current_username()]["posts"] = self.get_posts_count()
-            self.__session_data[self.get_current_username()]["name"] = self.get_name()
-            self.__session_data[self.get_current_username()]["bio"] = self.get_bio()
-            self.__session_data[self.get_current_username()]["profile_picture"] = self.get_profile_picture
-            self.__session_data[self.get_current_username()]["homepage"] = self.get_homepage()
+            self.__session_data[self.get_current_username()]["follower"]: int = self.get_follower_count()
+            self.__session_data[self.get_current_username()]["following"]: int = self.get_following_count()
+            self.__session_data[self.get_current_username()]["posts"]: int = self.get_posts_count()
+            self.__session_data[self.get_current_username()]["name"]: str = self.get_name()
+            self.__session_data[self.get_current_username()]["bio"]: str = self.get_bio()
+            self.__session_data[self.get_current_username()]["profile_picture"]: str = self.get_profile_picture
+            self.__session_data[self.get_current_username()]["homepage"]: str = self.get_homepage()
             self.success("Fetched data")
         except ValueError:
             pass
@@ -195,7 +191,7 @@ class InstaBot:
         liked_by_btn = self.driver.find_elements(By.CLASS_NAME, "_aacl._aaco._aacu._aacx._aad6._aade")[9]
         liked_by_btn.find_element(By.TAG_NAME, "a").click()
         time.sleep(waiting_time())
-        fetched = []
+        fetched: list = []
         index: int = 0
         class_name = "x9f619.xjbqb8w.x78zum5.x168nmei.x13lgxp2.x5pf9jr.xo71vjh.x1uhb9sk.x1plvlek.xryxfnj.x1c4vz4f." \
                      "x2lah0s.x1q0g3np.xqjyukv.x6s0dn4.x1oa3qoh.x1nhvcw1"
@@ -224,12 +220,12 @@ class InstaBot:
         self.driver.get(f"{self.base_url}{self.get_current_username()}/followers/")
         time.sleep(2 * waiting_time())
         followers = self.driver.find_elements(By.CLASS_NAME, "_ab8y._ab94._ab97._ab9f._ab9k._ab9p._abcm")
-        followers_list = list()
+        followers_list: list = list()
         for follower in followers:
             followers_list.append(follower.text)
         time.sleep(waiting_time())
         if amount - 1 <= len(followers_list):
-            followers_list = followers_list[:amount - 1]
+            followers_list: List[str] = followers_list[:amount - 1]
         return followers_list
 
     def get_likes(self):
@@ -329,7 +325,7 @@ class InstaBot:
     def write_comment(self, message: str) -> None:
         """Writes a comment for the currently opened post."""
         textfield = self.driver.find_element(By.CLASS_NAME, "_akhn").find_element(By.TAG_NAME, "textarea")
-        __write(textfield, message)
+        write(textfield, message)
         divs = self.driver.find_element(By.CLASS_NAME, "_akhn").find_elements(By.TAG_NAME, "div")
         print(len(divs))
         post_btn = divs[1].find_element(By.TAG_NAME, "div")
@@ -343,7 +339,7 @@ class InstaBot:
         time.sleep(2 * waiting_time())
         text_field = self.driver.find_element(By.CLASS_NAME, "_ab8w._ab94._ab99._ab9f._ab9m._ab9o._abbh._abcm")
         input_field = text_field.find_element(By.TAG_NAME, "textarea")
-        __write(input_field, message)
+        write(input_field, message)
         send_btn = self.driver.find_elements(By.CLASS_NAME, "_acan._acao._acas._aj1-")
         send_btn.click()
         print(f"Sent direct message to {self.get_current_username()} with this content:\n{message}")
