@@ -53,7 +53,7 @@ It is also possible to get data from the profile once it has been searched with 
 ```py
 user_data = bot.get_data('instagram')
 # user_data contains various counters as well as a link to the profile picture, homepage and bio
-print(f"Follower count of @instagram: {user_data['follower']})
+print(f"Follower count of @instagram: {user_data['followers']})
 ```
 
 
