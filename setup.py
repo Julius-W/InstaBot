@@ -1,7 +1,7 @@
 from setuptools import setup
 import os
 
-from version import VERSION
+from InstaWebBot.version import VERSION
 
 directory = os.path.abspath(os.path.dirname(__file__))
 with open(os.path.join(directory, 'README.md'), 'r', encoding="utf-8") as fh:

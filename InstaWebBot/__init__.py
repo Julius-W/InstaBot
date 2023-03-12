@@ -1,4 +1,4 @@
-from ..version import VERSION
+from .version import VERSION
 """InstaBot is made to simplify a few tasks for bots on Instagram with selenium."""
 
 __author__ = "Julius-W"
