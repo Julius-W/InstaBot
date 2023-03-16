@@ -18,13 +18,14 @@ from InstaWebBot import InstaBot
 bot = InstaBot('your_username', 'your_password')
 ```
 
-Here is an example with some optional arguments (using their default value):
+Here is an example with some optional arguments (using their default value if default exists):
 ```py
 from InstaWebBot import InstaBot
 bot = InstaBot('your_username', 'your_password', 
                headless=False, 
                driver="geckodriver", 
-               output=False)
+               output=False,
+               time=2.5)
 ```
 
 To log in to Instagram with the given username and password use
