@@ -19,11 +19,13 @@ bot = InstaBot('your_username', 'your_password')
 ```
 
 Here is an example with some optional arguments (using their default value if default exists):
+
 ```py
 from InstaWebBot import InstaBot
-bot = InstaBot('your_username', 'your_password', 
-               headless=False, 
-               driver="geckodriver", 
+
+bot = InstaBot('your_username', 'your_password',
+               headless=False,
+               driver="geckodriver",
                output=False,
                time=2.5)
 ```
@@ -68,6 +70,7 @@ This is a small example program to get 50 followers of a given profile (50 is th
 
 ```py
 from InstaWebBot import InstaBot
+
 bot = InstaBot('username', 'password')
 bot.login()
 bot.search('instagram')

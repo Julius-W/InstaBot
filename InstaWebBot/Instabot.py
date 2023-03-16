@@ -7,7 +7,6 @@ from typing import List, Optional
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.firefox.service import Service
 
 from .version import VERSION
 
@@ -62,13 +61,7 @@ class InstaBot:
 
     def __initialize_driver(self) -> None:
         """Initializes a driver instance for selenium."""
-        # service = Service(executable_path="test.exe") service=service, 
         options = webdriver.FirefoxOptions()
-        options.add_argument("start-maximized")
-        if self.__binary_location is not None and not os.path.exists(self.__binary_location):
-            warning("Firefox is not installed.")
-        elif self.__binary_location is not None:
-            options.binary_location = self.__binary_location
         # I strongly suggest to not use the headless option (Instagram might detect a headless browser)
         if self.__headless:
             warning("Using the headless option makes it easier to be detected by Instagram.")
