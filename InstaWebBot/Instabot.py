@@ -20,7 +20,7 @@ def warning(message: str) -> None:
 def write(input_field, message: str) -> None:
     """Simulates user text input."""
     typing_time: float = 0.1
-    for word in message:
+    for word in message.split():
         if len(word) > 2:
             input_field.send_keys(word[:1])
             time.sleep(typing_time)
@@ -39,12 +39,17 @@ class InstaBot:
     def __init__(self, username: str, password: str, **kwargs) -> None:
         """Initializes an instance of an InstaBot."""
         self.__headless: bool = kwargs.get("headless", False)
+        self.__development: bool = kwargs.get("development", False)
         selenium_driver: str = kwargs.get("firefox", "geckodriver")
         self.__allow_output: bool = kwargs.get("output", False)
         self.success("Output enabled.")
+        if self.__allow_output:
+            warning("Please be aware that too many actions within a short period of time could result in action by "
+                    "Instagram against the account.")
         self.waiting_time: float = kwargs.get("time", None)
         if self.waiting_time is not None and self.waiting_time < 1.5:
-            warning("A short waiting time could help Instagram detect bot activity.")
+            warning("Just a heads up, doing too many things in a short time on Instagram could get the account in "
+                    "trouble.")
         self.__binary_location: str = kwargs.get("binary", None)
         self.success(f"Using {selenium_driver} as driver for selenium.")
         if not self.__headless:
@@ -64,7 +69,7 @@ class InstaBot:
         options = webdriver.FirefoxOptions()
         # I strongly suggest to not use the headless option (Instagram might detect a headless browser)
         if self.__headless:
-            warning("Using the headless option makes it easier to be detected by Instagram.")
+            warning("Enabling the headless option facilitates detection by Instagram.")
             options.add_argument("--headless")
         self.driver = webdriver.Firefox(options=options)
 
@@ -93,7 +98,8 @@ class InstaBot:
         try:
             self.driver.find_element(By.CLASS_NAME, "_a9--._a9_1").click()
         except Exception as e:
-            warning(e.__str__())
+            if self.__development:
+                warning(e.__str__())
 
         # login attempt
         self.rest()
@@ -114,13 +120,16 @@ class InstaBot:
             self.driver.find_element(By.CLASS_NAME, "_acan._acao._acas._aj1-").click()
             self.rest()
         except Exception as e:
-            warning(e.__str__())
+            if self.__development:
+                warning(e.__str__())
         try:
             self.driver.find_element(By.CLASS_NAME, "_a9--._a9_1").click()
             self.rest()
             # last index is 0 or one - depending on the output btn
         except Exception as e:
-            warning(e.__str__())
+            if self.__development:
+                warning(e.__str__())
+            self.rest()
 
     def __on_profile(self) -> None:
         """Checks if the driver is currently on a profile."""

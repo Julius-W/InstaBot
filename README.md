@@ -1,21 +1,24 @@
 # InstaBot
-InstaBot is a Python library that provides some automation for simple tasks on Instagram like following accounts and sending DMs on Instagram using Selenium.
+InstaBot is a Python library that provides some automation for simple tasks on Instagram like following accounts and sending DMs on Instagram using Selenium. Please note that this library is not associated with Instagram or Meta.
 
 ## Installation
 You can install the library from the [GitHub repository](https://github.com/Julius-W/InstaBot) or by using pip:
 
-```
+```bash
 pip install InstaWebBot
 ```
 
 ## Usage
-**_IMPORTANT:_** The driver file for Selenium must be located in the current working directory of your project. You can download the driver [here](https://www.selenium.dev/documentation/webdriver/getting_started/install_drivers/). Please provide the driver name if you are not using the recommended geckodriver.
+**_IMPORTANT (version older than 0.3.0):_** The driver file for Selenium must be located in the current working directory of your project. You can download the driver [here](https://www.selenium.dev/documentation/webdriver/getting_started/install_drivers/). Please provide the driver name if you are not using the recommended geckodriver.
 
 Initialize the bot by passing in your Instagram username and password as parameters:
 
 ```py
 from InstaWebBot import InstaBot
 bot = InstaBot('your_username', 'your_password')
+
+# A bot login is required before any other action will be executed.
+bot.login()
 ```
 
 Here is an example with some optional arguments (using their default value if default exists):
@@ -24,7 +27,6 @@ Here is an example with some optional arguments (using their default value if de
 from InstaWebBot import InstaBot
 
 bot = InstaBot('your_username', 'your_password',
-               headless=False,
                driver="geckodriver",
                output=False,
                time=2.5)
